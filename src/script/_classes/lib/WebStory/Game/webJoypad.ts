@@ -5,7 +5,7 @@ import Vector2 = require("./Vector2");
 /**
  * joypad module for unified game controls on the web
  * 
- * @date 14-02-2017
+ * @date 21-02-2017
  */
 interface JoyTouch {
     id:any,
@@ -24,7 +24,7 @@ module joypad {
     fire:boolean = false,
     delta:any    = { dir:0, fire:0 }
 
-  export function enable(devices:string[] = ["keyboard", "touch", "gamepad"], autoUpdate:boolean = false) {
+  export function enable(devices:string[] = ["keyboard", "touch", "gamepad"], autoUpdate=false) {
     if (_suspended != null) {
       for (var device of devices) {
         if (_suspended.indexOf(device) === -1) {
@@ -54,13 +54,8 @@ module joypad {
           }
           _touchEnabled = true;
           break;
-        /* case "gamepad":
-          if (_goingBack) {
-            setTimeout(function() {
-              _goingBack = false;
-            }, 1000);
-          }
-          _gamepadEnabled = true; */
+        case "gamepad":
+          _gamepadEnabled = true;
       }
     }
     if (autoUpdate) {
@@ -96,8 +91,8 @@ module joypad {
           _hideUI();
           _touchEnabled = false;
           break;
-        /* case "gamepad":
-          _gamepadEnabled = false; */
+        case "gamepad":
+          _gamepadEnabled = false;
       }
     }
     cancelAnimationFrame(_updateTO);
@@ -142,9 +137,9 @@ module joypad {
     if (_touchEnabled) {
       _scanTouches();
     }
-    /* if (_gamepadEnabled) {
+    if (_gamepadEnabled) {
       _scanGamepad();
-    } */
+    }
     _updateUI();
     for (var key in joypad.delta) {
       if (joypad[key] instanceof Vector2) {
@@ -423,8 +418,56 @@ module joypad {
   */
   var
     _gamepadEnabled:boolean,
+    _activatingGamepad:boolean,
+    _goingBack=0,
     _;
 
+  function _scanGamepad() {
+    var gamepad = navigator.getGamepads != null ? navigator.getGamepads()[0] : null;
+    if (!gamepad) return;
+    var btn:boolean[] = [];
+    for (var b of gamepad.buttons) btn.push(b.pressed);
+    if (btn[0]) _activatingGamepad = true;
+    if (_activatingGamepad && !btn[0]) {
+      localStorage.setItem("joypad.device", joypad.device = "gamepad");
+      _activatingGamepad = false;
+    }
+    if (joypad.device !== "gamepad") return;
+
+    joypad.dir.x = gamepad.axes[0] || 0;
+    if (joypad.mode === "rc") {
+      joypad.dir.y = gamepad.axes[3] || 0;
+    } else {
+      joypad.dir.y = gamepad.axes[1] || 0;
+    }
+    if (joypad.mode = "gc") {
+      joypad.fire = btn[0] || btn[1] || btn[2] || btn[3];
+    } else {
+      joypad.fire = btn[0] || btn[2];
+      if (btn[1]) joypad.dir.y = -1;
+      if (btn[3]) joypad.dir.y = 1;
+    }
+    if (btn[12]) joypad.dir.y = -1;
+    if (btn[13]) joypad.dir.y = 1;
+    if (btn[14]) joypad.dir.x = -1;
+    if (btn[15]) joypad.dir.x = 1;
+    if (joypad.dir.magnitude < .2) joypad.dir.set(0);
+    if (joypad.dir.magnitude > 1) joypad.dir.magnitude = 1;
+
+    if (btn[8]) {
+      _goingBack--;
+      if (_goingBack === 0) history.back();
+    } else {
+      _goingBack = 1;
+    }
+    if (btn[9]) {
+      var el:any = document.querySelector(":focus");
+      if (el) {
+        el.click();
+        el.blur();
+      }
+    }
+  }
 
   /*
     _privates

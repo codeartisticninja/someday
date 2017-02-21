@@ -12,7 +12,7 @@ import http     = require("http");
 /**
  * Game class
  * 
- * @date 19-02-2017
+ * @date 20-02-2017
  */
 
 class Game extends Teller {
@@ -139,6 +139,9 @@ class Game extends Teller {
       actor.render();
       this.ctx.restore();
     }
+    if (!this.element.classList.contains("sticky") && this.element.getBoundingClientRect().top < 32) {
+      this.setSticky(true);
+    }
   }
 
   addActor(actor:Actor, ...toGroup:Array<Actor>[]) {
@@ -196,14 +199,19 @@ class Game extends Teller {
   }
 
   setSticky(sticky:boolean) {
-    if ((sticky && !this.element.classList.contains("sticky"))
-        || !sticky && this.element.classList.contains("sticky")) {
-      this.canvas.style.marginTop = "-15em";
-      this.canvas.style.marginBottom = "15em";
+    var div = this.element.querySelector("div");
+    if (sticky && !this.element.classList.contains("sticky")) {
+      div.style.top = this.element.getBoundingClientRect().top + "px";
+      this.element.classList.add("sticky");
       setTimeout(()=>{
-        this.element.classList.toggle("sticky");
-        this.canvas.removeAttribute("style");
-      }, 192);
+        div.removeAttribute("style");
+      }, 50);
+    } else if (!sticky && this.element.classList.contains("sticky")) {
+      div.style.top = "-15em";
+      setTimeout(()=>{
+        this.element.classList.remove("sticky");
+        div.removeAttribute("style");
+      }, 4096);
     }
   }
 

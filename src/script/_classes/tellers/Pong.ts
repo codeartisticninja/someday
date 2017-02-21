@@ -49,7 +49,7 @@ class Pong extends Game {
     var el = document.createElement("p");
     el.textContent = "Pong!";
     this.story.appendElement(el);
-    this.setSticky(true);
+    // this.setSticky(true);
   }
 
 }

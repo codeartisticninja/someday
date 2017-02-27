@@ -12,7 +12,7 @@ import http     = require("http");
 /**
  * Game class
  * 
- * @date 20-02-2017
+ * @date 22-02-2017
  */
 
 class Game extends Teller {
@@ -75,7 +75,6 @@ class Game extends Teller {
   }
 
   loadMap() {
-    console.log("loading map...");
     var mapFolder = this.mapUrl.substr(0, this.mapUrl.lastIndexOf("/")+1);
     for (var tileset of this.mapData.tilesets) {
       this.addSprite(new Sprite(tileset, mapFolder));

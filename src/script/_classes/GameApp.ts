@@ -19,16 +19,16 @@ class GameApp extends BaseGameApp {
   initLauchSettings() {
     var form = document.getElementById("launchSettings");
     var html = "<p>";
-    html += '<span><input id="noiseChk" type="checkbox" /> <label for="noiseChk">Background noise</label></span> ';
+    // html += '<span><input id="ambianceChk" type="checkbox" /> <label for="ambianceChk">Ambiance</label></span> ';
     html += '<span><input id="musicChk" type="checkbox" /> <label for="musicChk">Music</label></span> ';
-    html += '<span><input id="sfxChk" type="checkbox" /> <label for="sfxChk">Sound effects</label></span> ';
+    // html += '<span><input id="sfxChk" type="checkbox" /> <label for="sfxChk">Sound effects</label></span> ';
     html += '<span><input id="fullscreenChk" type="checkbox" /> <label for="fullscreenChk">Full screen</label></span> ';
     html += '</p><p><button>Begin</button></p>';
     form.innerHTML = html;
 
     var checkbox:HTMLInputElement;
-    checkbox = <HTMLInputElement>form.querySelector("#noiseChk");
-    if (checkbox) checkbox.checked = this.prefs.get("noise.enabled");
+    checkbox = <HTMLInputElement>form.querySelector("#ambianceChk");
+    if (checkbox) checkbox.checked = this.prefs.get("ambiance.enabled");
     checkbox = <HTMLInputElement>form.querySelector("#musicChk");
     if (checkbox) checkbox.checked = this.prefs.get("music.enabled");
     checkbox = <HTMLInputElement>form.querySelector("#sfxChk");
@@ -53,8 +53,8 @@ class GameApp extends BaseGameApp {
     (<HTMLElement>document.querySelector("#display")).removeAttribute("style");
 
     var checkbox:HTMLInputElement;
-    checkbox = <HTMLInputElement>form.querySelector("#noiseChk");
-    if (checkbox) this.prefs.set("noise.enabled", checkbox.checked);
+    checkbox = <HTMLInputElement>form.querySelector("#ambianceChk");
+    if (checkbox) this.prefs.set("ambiance.enabled", checkbox.checked);
     checkbox = <HTMLInputElement>form.querySelector("#musicChk");
     if (checkbox) this.prefs.set("music.enabled", checkbox.checked);
     checkbox = <HTMLInputElement>form.querySelector("#sfxChk");

@@ -18,7 +18,7 @@ if (!Element.prototype.requestFullscreen) {
 /**
  * BaseGameApp class
  * 
- * @date 14-02-2017
+ * @date 27-02-2017
  */
 
 class BaseGameApp {
@@ -27,15 +27,16 @@ class BaseGameApp {
   public prefs = new StorageFile("/prefs.json");
 
   constructor(storyElement: string, displayElement=storyElement) {
-    this.prefs.onSet("noise", this.applySoundPrefs.bind(this));
+    this.prefs.onSet("ambiance", this.applySoundPrefs.bind(this));
     this.prefs.onSet("music", this.applySoundPrefs.bind(this));
     this.prefs.onSet("sfx", this.applySoundPrefs.bind(this));
-    this.prefs.set("noise.enabled", true, true);
-    this.prefs.set("noise.volume", 0.25, true);
+    this.prefs.set("ambiance.enabled", true, true);
+    this.prefs.set("ambiance.volume", 0.25, true);
     this.prefs.set("music.enabled", true, true);
     this.prefs.set("music.volume", 0.5, true);
     this.prefs.set("sfx.enabled", true, true);
     this.prefs.set("sfx.volume", 1, true);
+    this.prefs.set("fullscreen", true, true);
     this.applySoundPrefs();
     
     this.story = new WebStory(storyElement, displayElement);
@@ -54,8 +55,8 @@ class BaseGameApp {
   }
 
   applySoundPrefs() {
-    Sound.enabled["noise"] = this.prefs.get("noise.enabled");
-    Sound.volumes["noise"] = this.prefs.get("noise.volume");
+    Sound.enabled["ambiance"] = this.prefs.get("ambiance.enabled");
+    Sound.volumes["ambiance"] = this.prefs.get("ambiance.volume");
     Sound.enabled["music"] = this.prefs.get("music.enabled");
     Sound.volumes["music"] = this.prefs.get("music.volume");
     Sound.enabled["sfx"]   = this.prefs.get("sfx.enabled");

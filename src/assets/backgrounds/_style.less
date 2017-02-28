@@ -9,8 +9,21 @@
       background-size: auto;
     }
 
-    &.blackness {
+    &.stars {
+      background-image: url("@{backgrounds-folder}starfield.png");
+      background-size: auto;
+
       .page-width {
+        background-color: rgba(0, 0, 0, 0.5);
+        max-height: none;
+      }
+    }
+    &.static {
+      background-image: url("@{backgrounds-folder}static.png");
+      background-size: auto;
+
+      .page-width {
+        background-color: rgba(0, 0, 0, 0.5);
         max-height: none;
       }
     }

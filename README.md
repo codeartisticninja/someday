@@ -1,6 +1,6 @@
-Theme: Anthem
-=============
-My second 1gam of 2017.
+Some day
+========
+A game about cats, little blue boys and astronauts.
 
 Compile and run
 ---------------

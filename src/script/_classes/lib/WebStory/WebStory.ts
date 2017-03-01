@@ -16,7 +16,7 @@ if (!Element.prototype.matches) {
 /**
  * WebStory class
  * 
- * @date 14-02-2017
+ * @date 01-mar-2017
  */
 
  var _nextChoiceId=0;
@@ -322,7 +322,7 @@ class WebStory {
     cancelAnimationFrame(this._scrollTO);
     this._scrollSpeed = 0;
     this._scrollBuffer = 0;
-    this.impatience++;
+    // this.impatience++;
     if (this.currentTeller) {
       this.currentTeller.hurry();
     }

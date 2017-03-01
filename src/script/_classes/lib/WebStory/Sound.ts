@@ -6,7 +6,7 @@ import WebStory = require("./WebStory");
 /**
  * Sound class
  * 
- * @date 14-02-2017
+ * @date 02-mar-2017
  */
 
 class Sound extends Teller {
@@ -51,13 +51,25 @@ class Sound extends Teller {
   }
 
   hurry() {
-    if (this.audio && this.audio.paused) {
+    if (this.audio && this.audio.src && this.audio.paused) {
       this.audio.play();
+      if (!this._tapEl) {
+        this._tapEl = document.createElement("p");
+        this._tapEl.textContent = "(tap to continue)";
+        this.story.appendElement(this._tapEl);
+      }
+      setTimeout(()=>{ this.hurry(); }, 1024);
     } else {
+      if (this._tapEl) this._tapEl.parentElement.removeChild(this._tapEl);
       super.hurry();
       this.story.impatience = 0;
     }
   }
+
+  /*
+    _privates
+  */
+  private _tapEl:HTMLElement;
 
 }
 export = Sound;

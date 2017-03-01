@@ -5,7 +5,7 @@ import WebStory = require("./WebStory");
 /**
  * Teller class
  * 
- * @date 09-02-2017
+ * @date 02-mar-2017
  */
 
 var tellers:Teller[] = [];
@@ -15,7 +15,7 @@ class Teller {
 
   constructor(public story:WebStory, public element:HTMLElement) {
     this.hurry = this.hurry.bind(this);
-    this.interval = this.story.impatience ? 128 : (this.story.get("_interval") || Math.max(element.textContent.length*50, 1024));
+    this.interval = this.story.impatience ? 128 : (this.story.get("_interval") || Math.max(element.textContent.length*80, 1024));
   }
 
   init() {

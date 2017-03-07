@@ -17,3 +17,5 @@ Open your browser to http://localhost:8000/
 Credits
 -------
 Made by [codeartistic.ninja](http://the.codeartistic.ninja/)
+
+Music by [mikesnipe](https://soundcloud.com/mikesnipe/cats-in-the-cradle)
